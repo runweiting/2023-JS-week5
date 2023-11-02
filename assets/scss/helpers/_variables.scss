@@ -415,6 +415,9 @@ $spacers: (
   3: $spacer * 0.75, // *custom
   4: $spacer * 1, // *custom
   5: $spacer * 1.25, // *custom
+  6: $spacer * 1.5, // *custom
+  7: $spacer * 1.75, // *custom
+  8: $spacer * 2, // *custom
   15: $spacer * 3.75, // *custom
   24: $spacer * 6, // *custom
   30: $spacer * 7.5, // *custom
@@ -654,7 +657,7 @@ $font-sizes: (
 // scss-docs-end font-sizes
 
 // scss-docs-start headings-variables
-$headings-margin-bottom:      $spacer * .5 !default;
+$headings-margin-bottom:      0 !default; // *custom
 $headings-font-family:        null !default;
 $headings-font-style:         null !default;
 $headings-font-weight:        500 !default;
