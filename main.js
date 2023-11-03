@@ -32,29 +32,71 @@ let data = [
       "rate": 7
     }
 ];
-let ticketCard = document.querySelector('.ticketCard');
-let str = '';
-data.forEach(function(item){
-    str += `<li class="col card border-0 shadow position-relative px-0">
-    <span class="tag-l position-absolute top-0 start-0 translate-middle-y bg-secondary fs-5 fw-normal text-white">${item.area}</span>
-    <img src="${item.imgUrl}" class="card-img-top mb-1" alt="travel_1" style="height: 180px;">
-    <span class="tag-m position-absolute bg-primary fw-normal text-white">${item.rate}</span>
-    <div class="d-flex flex-column p-4" style="height: 296px;">
-      <h3 class="card-title fs-4 fw-medium text-primary pb-1 border-bottom border-2 border-primary">${item.name}</h3>
-      <p class="fw-normal text-info flex-grow-1">${item.description}</p>
-      <div class="d-flex justify-content-between">
-        <div class="d-flex align-items-center">
-          <span class="material-symbols-outlined fs-5 text-primary me-1">
-            info
-          </span>
-          <p class="fw-medium text-primary mb-0">剩下最後 ${item.group} 組</p>
+// 初始化網頁畫面
+function init(){
+    let ticketCard = document.querySelector('.ticketCard');
+    let str = '';
+    data.forEach(function(item){
+        str += `<li class="col card border-0 shadow position-relative px-0">
+        <span class="tag-l position-absolute top-0 start-0 translate-middle-y bg-secondary fs-5 fw-normal text-white">${item.area}</span>
+        <img src="${item.imgUrl}" class="card-img-top mb-1" alt="travel_1" style="height: 180px;">
+        <span class="tag-m position-absolute bg-primary fw-normal text-white">${item.rate}</span>
+        <div class="d-flex flex-column p-4" style="height: 296px;">
+        <h3 class="card-title fs-4 fw-medium text-primary pb-1 border-bottom border-2 border-primary">${item.name}</h3>
+        <p class="fw-normal text-info flex-grow-1">${item.description}</p>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex align-items-center">
+            <span class="material-symbols-outlined fs-5 text-primary me-1">
+                info
+            </span>
+            <p class="fw-medium text-primary mb-0">剩下最後 ${item.group} 組</p>
+            </div>
+            <div class="d-flex align-items-center">
+            <span class="fw-medium text-primary me-1">TWD</span>
+            <p class="display-8 fw-medium text-primary mb-0">${item.price}</p>
+            </div>
         </div>
-        <div class="d-flex align-items-center">
-          <span class="fw-medium text-primary me-1">TWD</span>
-          <p class="display-8 fw-medium text-primary mb-0">${item.price}</p>
         </div>
-      </div>
-    </div>
-  </li>`
-});
-ticketCard.innerHTML = str;
+    </li>`
+    });
+    ticketCard.innerHTML = str;
+}
+init();
+
+// 地區搜尋
+let regionSearch = document.querySelector('#regionSearch');
+regionSearch.addEventListener('change',function(e){
+    if ( e.target.value == undefined ){
+        return
+    }
+    // 跑 forEach，做判斷，組字串，顯示畫面上
+    let str = '';
+    data.forEach(function(item){
+        if ( e.target.value == item.area ){
+            str += `<li class="col-4 card border-0 shadow position-relative px-0">
+        <span class="tag-l position-absolute top-0 start-0 translate-middle-y bg-secondary fs-5 fw-normal text-white">${item.area}</span>
+        <img src="${item.imgUrl}" class="card-img-top mb-1" alt="travel_1" style="height: 180px;">
+        <span class="tag-m position-absolute bg-primary fw-normal text-white">${item.rate}</span>
+        <div class="d-flex flex-column p-4" style="height: 296px;">
+        <h3 class="card-title fs-4 fw-medium text-primary pb-1 border-bottom border-2 border-primary">${item.name}</h3>
+        <p class="fw-normal text-info flex-grow-1">${item.description}</p>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex align-items-center">
+            <span class="material-symbols-outlined fs-5 text-primary me-1">
+                info
+            </span>
+            <p class="fw-medium text-primary mb-0">剩下最後 ${item.group} 組</p>
+            </div>
+            <div class="d-flex align-items-center">
+            <span class="fw-medium text-primary me-1">TWD</span>
+            <p class="display-8 fw-medium text-primary mb-0">${item.price}</p>
+            </div>
+        </div>
+        </div>
+    </li>`
+        }
+    });
+    let ticketCard = document.querySelector('.ticketCard');
+    ticketCard.innerHTML = str;
+})
+
