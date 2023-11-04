@@ -43,8 +43,8 @@ function init(){
     // 預備寫入：forEach 後的 index
     let dataNum = [];
     data.forEach(function(item,index){
-        let content = `<li class="col-4">
-        <div class="card border-0 shadow position-relative mb-9">
+        let content = `<li class="col-4 mb-9">
+        <div class="card border-0 shadow position-relative">
           <span class="tag-l position-absolute top-0 start-0 translate-middle-y bg-secondary fs-5 fw-normal text-white">${item.area}</span>
           <img src="${item.imgUrl}" class="card-img-top mb-1" alt="travel_1" style="height: 180px;">
           <span class="tag-m position-absolute bg-primary fw-normal text-white">${item.rate}</span>
@@ -88,8 +88,8 @@ regionSearch.addEventListener('change',function(e){
     data.forEach(function(item,index){
         // select 全部地區
         if ( e.target.value == "全部地區" ){
-            let content = `<li class="col-4">
-            <div class="card border-0 shadow position-relative mb-9">
+            let content = `<li class="col-4 mb-9">
+            <div class="card border-0 shadow position-relative">
               <span class="tag-l position-absolute top-0 start-0 translate-middle-y bg-secondary fs-5 fw-normal text-white">${item.area}</span>
               <img src="${item.imgUrl}" class="card-img-top mb-1" alt="travel_1" style="height: 180px;">
               <span class="tag-m position-absolute bg-primary fw-normal text-white">${item.rate}</span>
@@ -116,8 +116,8 @@ regionSearch.addEventListener('change',function(e){
         };
         // select 其他地區
         if ( e.target.value == item.area ){
-            let content = `<li class="col-4">
-            <div class="card border-0 shadow position-relative mb-9">
+            let content = `<li class="col-4 mb-9">
+            <div class="card border-0 shadow position-relative">
               <span class="tag-l position-absolute top-0 start-0 translate-middle-y bg-secondary fs-5 fw-normal text-white">${item.area}</span>
               <img src="${item.imgUrl}" class="card-img-top mb-1" alt="travel_1" style="height: 180px;">
               <span class="tag-m position-absolute bg-primary fw-normal text-white">${item.rate}</span>
@@ -160,14 +160,16 @@ const ticketRate = document.querySelector('#ticketRate');
 const ticketDescription = document.querySelector('#ticketDescription');
 addTicket.addEventListener('click',function(e){
     // 宣告空物件、input value 取值並寫入 data
+    let addId = data.length;
     let obj = {};
+    obj["id"] = addId++;
     obj["name"] = ticketName.value;
     obj["imgUrl"] = imgUrl.value;
     obj["area"] = sightSpot.value;
     obj["description"] = ticketDescription.value;
-    obj["group"] = ticketNum.value;
-    obj["price"] = ticketPrice.value;
-    obj["rate"] = ticketRate.value;
+    obj["group"] = Number(ticketNum.value);
+    obj["price"] = Number(ticketPrice.value);
+    obj["rate"] = Number(ticketRate.value);
     data.push(obj);
     clearData();
     init();
@@ -183,7 +185,6 @@ function clearData(){
     ticketPrice.value = '';
     ticketRate.value = ''
 }
-
 
 
 
