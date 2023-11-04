@@ -71,12 +71,10 @@ init();
 
 // select 地區搜尋 + 監聽
 const regionSearch = document.querySelector('#regionSearch');
-
 regionSearch.addEventListener('change',function(e){
-    // 預備 卡片套票 的集合
+    // 預備寫入：重組的字串
     let str = '';
-
-    // 預備 搜尋資料 的集合
+    // 預備寫入：forEach 後的 index
     let dataNum = [];
 
     // select 地區搜尋
@@ -106,7 +104,8 @@ regionSearch.addEventListener('change',function(e){
               </div>
             </div>
           </li>`;
-            str += content
+            str += content;
+            dataNum.push(index)
         };
         // select 其他地區
         if ( e.target.value == item.area ){
@@ -131,9 +130,9 @@ regionSearch.addEventListener('change',function(e){
             </div>
             </div>
             </li>`;
-            str += content
+            str += content;
+            dataNum.push(index)
         };
-        dataNum.push(index)
     });
     ticketCard.innerHTML = str;
 
@@ -141,6 +140,45 @@ regionSearch.addEventListener('change',function(e){
     const searchResult = document.querySelector('.searchResult');
     searchResult.innerHTML = `<p class="searchResult mb-0 text-info" style="width: 255px">本次搜尋共 ${dataNum.length} 筆資料</p>`;
 });
+
+// form 新增旅遊套票 + 監聽
+const addTicket = document.querySelector('.addTicket');
+const ticketName = document.querySelector('#ticketName');
+const imgUrl = document.querySelector('#imgUrl');
+const sightSpot = document.querySelector('#sightSpot');
+const ticketPrice = document.querySelector('#ticketPrice');
+const ticketNum = document.querySelector('#ticketNum');
+const ticketRate = document.querySelector('#ticketRate');
+const ticketDescription = document.querySelector('#ticketDescription');
+addTicket.addEventListener('click',function(e){
+    // 宣告空物件、input value 取值並寫入 data
+    let obj = {};
+    obj["name"] = ticketName.value;
+    obj["imgUrl"] = imgUrl.value;
+    obj["area"] = sightSpot.value;
+    obj["description"] = ticketDescription.value;
+    obj["group"] = ticketNum.value;
+    obj["price"] = ticketPrice.value;
+    obj["rate"] = ticketRate.value;
+    data.push(obj);
+    init();
+    clearData();
+    
+    // 清空 input value
+    function clearData(){
+        ticketName.value = '';
+        imgUrl.value = '';
+        sightSpot.value = '';
+        ticketDescription = '';
+        ticketNum.value = '';
+        ticketPrice.value = '';
+        ticketRate.value = ''
+    }
+});
+
+
+
+
 
 
 
