@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2023-JS-week5</title>
+    <script type="module" crossorigin src="/2023-JS-week5/assets/index-3be7b130.js"></script>
+    <link rel="stylesheet" href="/2023-JS-week5/assets/index-c4d8998c.css">
+  </head>
+  <body>
+    
+    <!------- 新增旅遊套票 ------->
+    <div class="container shadow mt-30 mb-25 px-24 pt-30 pb-15 rounded" style="width: 920px;">
+      <div class="row mb-6">
+        <div class="col flex-column pb-0">
+          <img class="img-fluid mb-5" src="/2023-JS-week5/assets/main_img-1918b0d0.png" alt="main_img">
+          <img class="img-fluid" src="/2023-JS-week5/assets/logo-86a655b0.png" alt="logo">
+        </div>
+        <form class="col flex-column">
+          <div class="d-flex align-items-center border-bottom border-primary border-3 pb-1 mb-8">
+            <span class="material-symbols-outlined me-2 fs-5 text-primary">
+              add_circle
+              </span>
+            <h2 class="fs-4 fw-bold text-primary">新增旅遊套票</h2>
+          </div>
+          <ul class="form-group list-unstyled">
+            <li class="d-flex align-items-center mb-4">
+              <label for="ticketName" class="fs-6 fw-medium text-primary me-7">套票名稱</label>
+              <input type="text" id="ticketName" placeholder="請填寫套票名稱" name="套票名稱">
+            </li>
+            <li class="d-flex align-items-center mb-4">
+              <label for="imgUrl" class="fs-6 fw-medium text-primary me-7">圖片網址</label>
+              <input type="text" id="imgUrl" placeholder="請填寫圖片網址" name="圖片網址">
+            </li>
+            <li class="d-flex align-items-center mb-4">
+              <label for="sightSpot" class="fs-6 fw-medium text-primary me-7">景點地區</label>
+              <select id="sightSpot" name="景點地區">
+                <option value="" disabled selected hidden>請選擇景點地區</option>
+                <option value="台北">台北</option>
+                <option value="台中">台中</option>
+                <option value="高雄">高雄</option>
+              </select>
+            </li>
+            <li class="d-flex align-items-center mb-4">
+              <label for="ticketPrice" class="fs-6 fw-medium text-primary me-7">套票金額</label>
+              <input type="number" id="ticketPrice" placeholder="請填寫套票金額" name="套票金額" min="0">
+            </li>
+            <li class="d-flex align-items-center mb-4">
+              <label for="ticketNum" class="fs-6 fw-medium text-primary me-7">套票組數</label>
+              <input type="number" id="ticketNum" placeholder="請填寫套票組數" name="套票組數" min="1">
+            </li>
+            <li class="d-flex align-items-center mb-4">
+              <label for="ticketRate" class="fs-6 fw-medium text-primary me-7">套票星級</label>
+              <input type="number" id="ticketRate" placeholder="請填寫套票星級" name="套票星級" min="1" max="10">
+            </li>
+            <li class="d-flex">
+              <label for="ticketDescription" class="fs-6 fw-medium text-primary me-7 pt-2">套票描述</label>
+              <textarea name="套票描述" id="ticketDescription" placeholder="請填寫套票描述 (限 100 字)" style="min-height: 130px;"></textarea>
+            </li>
+          </ul>
+        </form>
+      </div>
+      <div class="row">
+        <div class="col text-end">
+          <input type="button" value="新增套票" class="addTicket btn btn-primary">
+        </div>
+      </div>
+    </div>
+    <!------- 地區搜尋和卡片套票 ------->
+    <div class="bg-lightGray">
+      <div class="container pt-14 pb-30" style="width: 1110px;">
+        <div class="d-flex align-items-center mb-13">
+          <select id="regionSearch" name="regionSearch" class="me-8 text-info" style="width: 255px; border: 1px solid #CED4DA;">
+            <option value="地區搜尋" disabled selected hidden>地區搜尋</option>
+            <option value="全部地區">全部地區</option>
+            <option value="台北">台北</option>
+            <option value="台中">台中</option>
+            <option value="高雄">高雄</option>
+          </select>
+          <p class="searchResult mb-0 text-info" style="width: 255px">本次搜尋共 3 筆資料</p>
+        </div>
+        <ul class="ticketCard list-unstyled row flex-wrap ">
+          <li class="col-4 mb-9">
+            <div class="card border-0 shadow position-relative">
+              <span class="tag-l position-absolute top-0 start-0 translate-middle-y bg-secondary fs-5 fw-normal text-white">台北</span>
+              <img src="/2023-JS-week5/assets/travel_1-d0f7c518.png" class="card-img-top mb-1" alt="travel_1" style="height: 180px;">
+              <span class="tag-m position-absolute bg-primary fw-normal text-white">8.6</span>
+              <div class="d-flex flex-column p-4" style="height: 296px;">
+                <h3 class="card-title fs-4 fw-medium text-primary pb-1 border-bottom border-2 border-primary">綠島自由行套裝行程</h3>
+                <p class="fw-normal text-info flex-grow-1">嚴選超高CP值綠島自由行套裝行程，多種綠島套裝組合，提供台東綠島來回船票、綠島環島機車、綠島民宿住宿，行程加贈『綠島浮潛體驗』以及『綠島生態導覽』，讓你用輕鬆的綠島套裝自由行，也能深度認識綠島在地文化。</p>
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <span class="material-symbols-outlined fs-5 text-primary me-1">
+                      info
+                    </span>
+                    <p class="fw-medium text-primary mb-0">剩下最後 8 組</p>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <span class="fw-medium text-primary me-1">TWD</span>
+                    <p class="display-8 fw-medium text-primary mb-0">$1,280</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="col-4 mb-9">
+            <div class="card border-0 shadow position-relative">
+              <span class="tag-l position-absolute top-0 start-0 translate-middle-y bg-secondary fs-5 fw-normal text-white">台北</span>
+              <img src="/2023-JS-week5/assets/travel_1-d0f7c518.png" class="card-img-top mb-1" alt="travel_1" style="height: 180px;">
+              <span class="tag-m position-absolute bg-primary fw-normal text-white">8.6</span>
+              <div class="d-flex flex-column p-4" style="height: 296px;">
+                <h3 class="card-title fs-4 fw-medium text-primary pb-1 border-bottom border-2 border-primary">綠島自由行套裝行程</h3>
+                <p class="fw-normal text-info flex-grow-1">嚴選超高CP值綠島自由行套裝行程，多種綠島套裝組合，提供台東綠島來回船票、綠島環島機車、綠島民宿住宿，行程加贈『綠島浮潛體驗』以及『綠島生態導覽』，讓你用輕鬆的綠島套裝自由行，也能深度認識綠島在地文化。</p>
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <span class="material-symbols-outlined fs-5 text-primary me-1">
+                      info
+                    </span>
+                    <p class="fw-medium text-primary mb-0">剩下最後 8 組</p>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <span class="fw-medium text-primary me-1">TWD</span>
+                    <p class="display-8 fw-medium text-primary mb-0">$1,280</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="col-4 mb-9">
+            <div class="card border-0 shadow position-relative">
+              <span class="tag-l position-absolute top-0 start-0 translate-middle-y bg-secondary fs-5 fw-normal text-white">台北</span>
+              <img src="/2023-JS-week5/assets/travel_1-d0f7c518.png" class="card-img-top mb-1" alt="travel_1" style="height: 180px;">
+              <span class="tag-m position-absolute bg-primary fw-normal text-white">8.6</span>
+              <div class="d-flex flex-column p-4" style="height: 296px;">
+                <h3 class="card-title fs-4 fw-medium text-primary pb-1 border-bottom border-2 border-primary">綠島自由行套裝行程</h3>
+                <p class="fw-normal text-info flex-grow-1">嚴選超高CP值綠島自由行套裝行程，多種綠島套裝組合，提供台東綠島來回船票、綠島環島機車、綠島民宿住宿，行程加贈『綠島浮潛體驗』以及『綠島生態導覽』，讓你用輕鬆的綠島套裝自由行，也能深度認識綠島在地文化。</p>
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <span class="material-symbols-outlined fs-5 text-primary me-1">
+                      info
+                    </span>
+                    <p class="fw-medium text-primary mb-0">剩下最後 8 組</p>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <span class="fw-medium text-primary me-1">TWD</span>
+                    <p class="display-8 fw-medium text-primary mb-0">$1,280</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+        
+  </body>
+</html>
