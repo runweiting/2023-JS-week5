@@ -35,11 +35,14 @@ let data = [
 
 // 共用 DOM
 let ticketCard = document.querySelector('.ticketCard');
+const searchResult = document.querySelector('.searchResult');
 
 // 初始化網頁畫面
 function init(){
     let str = '';
-    data.forEach(function(item){
+    // 預備寫入：forEach 後的 index
+    let dataNum = [];
+    data.forEach(function(item,index){
         let content = `<li class="col-4">
         <div class="card border-0 shadow position-relative">
           <span class="tag-l position-absolute top-0 start-0 translate-middle-y bg-secondary fs-5 fw-normal text-white">${item.area}</span>
@@ -63,9 +66,13 @@ function init(){
           </div>
         </div>
       </li>`;
-        str += content
+        str += content;
+        dataNum.push(index)
     });
     ticketCard.innerHTML = str;
+    
+    // 顯示 搜尋資料 的筆數
+    searchResult.innerHTML = `<p class="searchResult mb-0 text-info" style="width: 255px">本次搜尋共 ${dataNum.length} 筆資料</p>`;
 }
 init();
 
@@ -135,9 +142,8 @@ regionSearch.addEventListener('change',function(e){
         };
     });
     ticketCard.innerHTML = str;
-
+    
     // 顯示 搜尋資料 的筆數
-    const searchResult = document.querySelector('.searchResult');
     searchResult.innerHTML = `<p class="searchResult mb-0 text-info" style="width: 255px">本次搜尋共 ${dataNum.length} 筆資料</p>`;
 });
 
@@ -161,20 +167,20 @@ addTicket.addEventListener('click',function(e){
     obj["price"] = ticketPrice.value;
     obj["rate"] = ticketRate.value;
     data.push(obj);
-    init();
     clearData();
-    
-    // 清空 input value
-    function clearData(){
-        ticketName.value = '';
-        imgUrl.value = '';
-        sightSpot.value = '';
-        ticketDescription = '';
-        ticketNum.value = '';
-        ticketPrice.value = '';
-        ticketRate.value = ''
-    }
+    init();
 });
+
+// 清空 input value
+function clearData(){
+    ticketName.value = '';
+    imgUrl.value = '';
+    sightSpot.value = '';
+    ticketDescription.value = '';
+    ticketNum.value = '';
+    ticketPrice.value = '';
+    ticketRate.value = ''
+}
 
 
 
