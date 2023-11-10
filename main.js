@@ -175,6 +175,77 @@ addTicket.addEventListener('click',function(e){
     init();
 });
 
+/* if 判斷： form-group input 是否確實填寫？ --- */
+// 否，顯示 <div> alert-message
+// 1. 套票名稱是否空白？
+ticketName.addEventListener('blur',function(){
+  const ticketNameMessage = document.getElementById('ticketName-message');
+  if ( ticketName.value.trim() ){
+    ticketNameMessage.classList.add('d-none');
+  } else {
+    ticketNameMessage.classList.remove('d-none');
+    ticketNameMessage.innerHTML = `<span class="material-symbols-outlined me-1">error
+    </span><span>必填！</span>`
+  }
+});
+// 2. 圖片網址是否通過驗證？
+imgUrl.addEventListener('blur',function(){
+  const imgUrlMessage = document.getElementById('imgUrl-message');
+  // 定義用於 URL 驗證的正規表達式
+  // ^: 表示字符串的開始
+  // (https?:\/\/)?: 匹配 "http://" 或 "https://://"
+  // ([\w.-]+\.[a-z]{2,}): 匹配域名，允許字母、數字、點和連字符。至少需要一個點和兩個字母的頂級域 (TLD)
+  // (\/\S*)?$: 匹配可選的路徑（以斜杠開始），後面跟著非空白字符，確保它在字符串的末尾結束
+  const reg = /^(https?:\/\/)?([\w.-]+\.[a-z]{2,})(\/\S*)?$/i;
+  if ( reg.test(imgUrl.value) ){
+    // 如果是有效的 URL，隱藏警告訊息
+    imgUrlMessage.classList.add('d-none');
+  } else if ( imgUrl.value.trim() === '' ) {
+    // 如果輸入為空，清空輸入框，顯示 "必填!" 提示用戶重新輸入
+    imgUrlMessage.value = '';
+    imgUrlMessage.classList.remove('d-none');
+    imgUrlMessage.innerHTML = `<span class="material-symbols-outlined me-1">error</span><span>必填！</span>`
+  } else {
+    // 如果輸入不是有效URL，清空輸入框，顯示 "請填入正確網址" 
+    imgUrlMessage.value = '';
+    imgUrlMessage.classList.remove('d-none');
+    imgUrlMessage.innerHTML = `<span class="material-symbols-outlined me-1">error</span><span>請輸入正確網址</span>`
+  };
+});
+// 3. 景點地區是否有選擇？
+sightSpot.addEventListener('blur',function(){
+  const sightSpotMessage = document.getElementById('sightSpot-message');
+  // 如果 sightSpot 為假值（undefined、null、false、0、NaN），表示用戶未填寫
+  if ( !sightSpot.value ){
+    sightSpotMessage.classList.remove('d-none');
+    sightSpotMessage.innerHTML = `<span class="material-symbols-outlined me-1">error</span><span>必填！</span>`
+  } else {
+    sightSpotMessage.classList.add('d-none');
+  }
+})
+// 4. 套票金額是否空白？
+ticketPrice.addEventListener('blur',function(){
+  const ticketPriceMessage = document.getElementById('ticketPrice-message');
+  // 使用正規表達式檢查 ticketPrice 的值是否為正整數
+  // ^: 表示字符串的開始
+  // [1-9]: 匹配一個介於1到9之間的數字。確保第一個數字不是0
+  // \d*: 匹配零個或多個數字（0-9）
+  // $: 表示字符串的結尾
+  if ( /^[1-9]\d*$/.test(ticketPrice.value) ){
+    ticketPriceMessage.classList.add('d-none');
+  } else if ( ticketPrice.value === '' ){
+    ticketPriceMessage.classList.remove('d-none');
+    ticketPriceMessage.innerHTML = `<span class="material-symbols-outlined me-1">error</span><span>必填！</span>`
+  } else {
+    // 如果輸入不是正整數
+    ticketPriceMessage.classList.remove('d-none');
+    ticketPriceMessage.innerHTML = `<span class="material-symbols-outlined me-1">error</span><span>金額需為正整數！</span>`
+  }
+});
+
+
+
+
 // 清空 input value
 function clearData(){
     ticketName.value = '';
@@ -184,7 +255,7 @@ function clearData(){
     ticketNum.value = '';
     ticketPrice.value = '';
     ticketRate.value = ''
-}
+};
 
 
 
