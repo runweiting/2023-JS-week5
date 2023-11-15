@@ -1,18 +1,27 @@
 import './assets/scss/all.scss';
 
-// 透過 axios 撈外部資料
-let data = [];
-axios.get('https://raw.githubusercontent.com/hexschool/js-training/main/travelApi.json')
-.then(function(response){
-  data = response.data['data'];
-  renderData();
-})
-
 // 共用 DOM
 let ticketCard = document.querySelector('.ticketCard');
 const searchResult = document.querySelector('.searchResult');
 
-// 渲染網頁畫面
+
+let data = [];
+
+// 1. 初始化網頁畫面 init
+function init(){
+  axios.get('https://raw.githubusercontent.com/hexschool/js-training/main/travelApi.json')
+  .then(function(response){
+    data = response.data['data'];
+    renderData();
+    renderC3();
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+};
+init();
+
+// 2. 渲染網頁畫面 renderData
 // 設定參數 region 的預設值為 "全部地區"
 function renderData(region = "全部地區"){
   const filterData = region === '全部地區'?
@@ -49,15 +58,65 @@ function renderData(region = "全部地區"){
   });
   ticketCard.innerHTML = content;
 };
-renderData();
 
-// 篩選資料 + 監聽
+// 3. 渲染 C3 圖表 renderC3
+// 套票地區的數量佔比
+// data = [{area: "高雄",..},..]
+// areaNum = {'高雄': 1,..}
+// areaName = ['高雄',..]
+// ary = ['高雄',1]
+// newData = [['高雄',1],..]
+function renderC3(){
+  let areaNum = {};
+  data.forEach(function(item){
+    if (areaNum[item.area] == undefined){
+      areaNum[item.area] = 1
+    } else {
+      areaNum[item.area]++
+    }
+  });
+  // donut 圖表顯示順序為：高雄、台北、台中
+  let newData = [];
+  let areaName = Object.keys(areaNum);
+  areaName.forEach(function(item){
+    let ary = [];
+    ary.push(item);
+    ary.push(areaNum[item]);
+    newData.push(ary)
+  });
+  // donut 圖表顯示順序為：台北、台中、高雄
+  let newDataOrder = [
+    ['台北',areaNum['台北']],
+    ['台中',areaNum['台中']],
+    ['高雄',areaNum['高雄']],
+  ];
+  let chart = c3.generate({
+    bindto: '.chart',
+    data: {
+      columns: newDataOrder,
+      type: 'donut',
+      colors: {
+        '台北': '#26BFC7',
+        '台中': '#5151D3',
+        '高雄': '#E68618'
+      }
+    },
+    donut: {
+      title: '套票地區的數量比例'
+    },
+    size: {
+      height: 320, //調整圖表高度
+   }
+  })
+};
+
+// 4. 篩選資料 + 監聽
 const regionSearch = document.querySelector('#regionSearch');
 regionSearch.addEventListener('change',function(e){
   renderData(e.target.value)
 });
 
-// form 新增旅遊套票 + 監聽
+// 5. 新增旅遊套票 + 監聽
 const addTicket = document.querySelector('.addTicket');
 const ticketName = document.querySelector('#ticketName');
 const imgUrl = document.querySelector('#imgUrl');
@@ -91,6 +150,7 @@ addTicket.addEventListener('click',function(e){
       addTicketForm.reset();
     }
     renderData();
+    renderC3();
 });
 
 /* if 判斷： form-group input 是否確實填寫？ --- */
