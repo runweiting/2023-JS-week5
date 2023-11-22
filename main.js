@@ -102,7 +102,7 @@ function renderC3(){
       }
     },
     donut: {
-      title: '套票地區的數量比例'
+      title: '套票地區比重'
     },
     size: {
       height: 320, //調整圖表高度
