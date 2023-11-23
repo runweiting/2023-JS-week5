@@ -4,7 +4,6 @@ import './assets/scss/all.scss';
 let ticketCard = document.querySelector('.ticketCard');
 const searchResult = document.querySelector('.searchResult');
 
-
 let data = [];
 
 // 1. 初始化網頁畫面 init
