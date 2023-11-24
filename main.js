@@ -27,6 +27,8 @@ function renderData(region = "全部地區"){
   data : data.filter(item => item.area === region
   );
   // searchResult 可以利用 filterData 取值
+  // 若 filterData.length 大於 0（真值)，則回傳並賦值 searchResult.textContent
+  // 若 filterData.length 為 0 或偽值，則查無此關鍵字資料
   searchResult.textContent = filterData.length?
   `本次搜尋共 ${filterData.length} 筆資料` : "查無此關鍵字資料";
   let content = '';
