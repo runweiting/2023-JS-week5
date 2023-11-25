@@ -4,7 +4,7 @@ import validate from 'validate.js';
 // 共用 DOM
 let ticketCard = document.querySelector('.ticketCard');
 const searchResult = document.querySelector('.searchResult');
-
+let filterData = [];
 let data = [];
 
 // 1. 初始化網頁畫面 init
@@ -24,9 +24,10 @@ init();
 // 2. 渲染網頁畫面 renderData
 // 設定參數 region 的預設值為 "全部地區"
 function renderData(region = "全部地區"){
-  const filterData = region === '全部地區'?
+  filterData = region === '全部地區'?
   data : data.filter(item => item.area === region
   );
+  renderC3();
   // searchResult 可以利用 filterData 取值
   // 若 filterData.length 大於 0（真值)，則回傳並賦值 searchResult.textContent
   // 若 filterData.length 為 0 或偽值，則查無此關鍵字資料
@@ -63,20 +64,21 @@ function renderData(region = "全部地區"){
 
 // 3. 渲染 C3 圖表 renderC3
 // 套票地區的數量佔比
-// data = [{area: "高雄",..},..]
+// filterData = [{area: "高雄",..},..]
 // areaNum = {'高雄': 1,..}
 // areaName = ['高雄',..]
 // ary = ['高雄',1]
 // newData = [['高雄',1],..]
 function renderC3(){
   let areaNum = {};
-  data.forEach(function(item){
+  filterData.forEach(function(item){
     if (areaNum[item.area] == undefined){
       areaNum[item.area] = 1
     } else {
       areaNum[item.area]++
     }
   });
+  /* 第一次寫這段：
   // donut 圖表顯示順序為：高雄、台北、台中
   let newData = [];
   let areaName = Object.keys(areaNum);
@@ -92,6 +94,17 @@ function renderC3(){
     ['台中',areaNum['台中']],
     ['高雄',areaNum['高雄']],
   ];
+  */
+  
+  /* 第二次寫這段：*/
+  // filterData = [{area: "高雄",..},..]
+  // areaNum = {'高雄': 1,..}
+  // Object.entries(areaNum) = Array(3)['高雄',1]...
+  // array.map(function(item, index, array) { return 條件;})
+  // [key, value] 是解構賦值語法，將 Object.entries 返回的 [key, value] 陣列中的元素分別賦值給 key 和 value
+  // => [key, value] 表示箭頭函式的返回值是一個包含 key 和 value 的新陣列
+  let newDataOrder = Object.entries(areaNum).map(([key, value]) => [key, value]);
+
   let chart = c3.generate({
     bindto: '.chart',
     data: {
@@ -104,12 +117,16 @@ function renderC3(){
       }
     },
     donut: {
-      title: '套票地區比重'
+      title: '套票地區比重',
+      width: 20, // 調整圓圈粗細
+      label: {
+        show: false, // 隱藏百分比文字
+      }
     },
     size: {
-      height: 320, //調整圖表高度
+      height: 200, // 調整圖表高度
    }
-  })
+  });
 };
 
 // 4. 篩選資料 + 監聽
@@ -218,7 +235,6 @@ const inputs = document.querySelectorAll('input[type="text"],select[name="sightS
 inputs.forEach(item => {
   item.addEventListener('change', function() {
     // 1. 清空錯誤提示
-    console.log(item);
     const errorsMessage = document.querySelector(`.${item.name}`);
     errorsMessage.innerHTML = ``;
 
@@ -240,7 +256,7 @@ inputs.forEach(item => {
   });
 });
 
-/* 第一次寫驗證：手刻
+/* 第一次寫這段：手刻驗證
 // if 判斷： form-group input 是否確實填寫？
 // 否，顯示 <div> alert-message
 // 1. 套票名稱是否空白？
