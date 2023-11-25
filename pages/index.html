@@ -26,108 +26,53 @@
           <!-- *** 不是列表，不可以用 ul > li *** -->
           <form class="addTicketForm form-group">
             <!-- 1. 套票名稱 -->
-            <div class="d-flex align-items-center">
+            <!-- Validate.js input name 要和 p class name 一致 -->
+            <div class="d-flex align-items-center mb-4">
               <label for="ticketName" class="fs-6 fw-medium text-primary me-7">套票名稱</label>
-              <input type="text" id="ticketName" placeholder="請填寫套票名稱" name="套票名稱">
+              <input type="text" id="ticketName" placeholder="請填寫套票名稱" name="ticketName">
             </div>
-            <!-- if 判斷：套票名稱是否空白？ -->
-            <div class="alert-message mb-4">
-              <p id="ticketName-message" data-message="套票名稱" class="d-flex align-items-center text-danger d-none">
-                <span class="material-symbols-outlined me-1">
-                  error
-                  </span>
-                <span>必填！</span>
-              </p>
-            </div>
+            <div class="errors-message ticketName"></div>
             <!-- 2. 圖片網址 -->
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center mb-4">
               <label for="imgUrl" class="fs-6 fw-medium text-primary me-7">圖片網址</label>
-              <input type="text" id="imgUrl" placeholder="請填寫圖片網址" name="圖片網址">
+              <input type="text" id="imgUrl" placeholder="請填寫圖片網址" name="imgUrl">
             </div>
-            <!-- if 判斷：圖片網址是否空白？ -->
-            <div class="alert-message mb-4">
-              <p id="imgUrl-message" data-message="圖片網址" class="d-flex align-items-center text-danger d-none">
-                <span class="material-symbols-outlined me-1">
-                  error
-                  </span>
-                <span>必填！</span>
-              </p>
-            </div>
+            <div class="errors-message imgUrl"></div>
             <!-- 3. 景點地區 -->
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center mb-4">
               <label for="sightSpot" class="fs-6 fw-medium text-primary me-7">景點地區</label>
-              <select id="sightSpot" name="景點地區">
+              <select id="sightSpot" name="sightSpot">
                 <option value="" disabled selected hidden>請選擇景點地區</option>
                 <option value="台北">台北</option>
                 <option value="台中">台中</option>
                 <option value="高雄">高雄</option>
               </select>
             </div>
-            <!-- if 判斷：景點地區是否空白？ -->
-            <div class="alert-message mb-4">
-              <p id="sightSpot-message" data-message="景點地區" class="d-flex align-items-center text-danger d-none">
-                <span class="material-symbols-outlined me-1">
-                  error
-                  </span>
-                <span>必填！</span>
-              </p>
-            </div>
+            <div class="errors-message sightSpot"></div>
             <!-- 4. 套票金額 -->
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center mb-4">
               <label for="ticketPrice" class="fs-6 fw-medium text-primary me-7">套票金額</label>
-              <input type="number" id="ticketPrice" placeholder="請填寫套票金額" name="套票金額" min="0">
+              <input type="number" id="ticketPrice" placeholder="請填寫套票金額" name="ticketPrice" min="0">
             </div>
-            <!-- if 判斷：套票金額是否空白？ -->
-            <div class="alert-message mb-4">
-              <p id="ticketPrice-message" data-message="套票金額" class="d-flex align-items-center text-danger d-none">
-                <span class="material-symbols-outlined me-1">
-                  error
-                  </span>
-                <span>必填！</span>
-              </p>
-            </div>
+            <div class="errors-message ticketPrice"></div>
             <!-- 5. 套票組數 -->
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center mb-4">
               <label for="ticketNum" class="fs-6 fw-medium text-primary me-7">套票組數</label>
-              <input type="number" id="ticketNum" placeholder="請填寫套票組數" name="套票組數" min="1">
+              <input type="number" id="ticketNum" placeholder="請填寫套票組數" name="ticketNum" min="1">
             </div>
-            <!-- if 判斷：套票金額是否空白？ -->
-            <div class="alert-message mb-4">
-              <p id="ticketNum-message" data-message="套票組數" class="d-flex align-items-center text-danger d-none">
-                <span class="material-symbols-outlined me-1">
-                  error
-                  </span>
-                <span>必填！</span>
-              </p>
-            </div>
+            <div class="errors-message ticketNum"></div>
             <!-- 6. 套票星級 -->
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center mb-4">
               <label for="ticketRate" class="fs-6 fw-medium text-primary me-7">套票星級</label>
-              <input type="number" id="ticketRate" placeholder="請填寫套票星級" name="套票星級" min="1" max="10">
+              <input type="number" id="ticketRate" placeholder="請填寫套票星級" name="ticketRate" min="1" max="10">
             </div>
-            <!-- if 判斷：套票星級是否空白？ -->
-            <div class="alert-message mb-4">
-              <p id="ticketRate-message" data-message="套票星級" class="d-flex align-items-center text-danger d-none">
-                <span class="material-symbols-outlined me-1">
-                  error
-                  </span>
-                <span>必填！</span>
-              </p>
-            </div>
+            <div class="errors-message ticketRate"></div>
             <!-- 7. 套票敘述 -->
             <div class="d-flex">
               <label for="ticketDescription" class="fs-6 fw-medium text-primary me-7 pt-2">套票描述</label>
-              <textarea name="套票描述" id="ticketDescription" placeholder="請填寫套票描述 (限 100 字)" style="min-height: 130px;"></textarea>
+              <textarea name="ticketDescription" id="ticketDescription" placeholder="請填寫套票描述 (限 100 字)" style="min-height: 130px;"></textarea>
             </div>
-            <!-- if 判斷：套票敘述是否空白？ -->
-            <div class="alert-message">
-              <p id="ticketDescription-message" data-message="套票敘述" class="d-flex align-items-center text-danger d-none">
-                <span class="material-symbols-outlined me-1">
-                  error
-                  </span>
-                <span>必填！</span>
-              </p>
-            </div>
+            <div class="errors-message ticketDescription"></div>
           </form>
         </div>
       </div>

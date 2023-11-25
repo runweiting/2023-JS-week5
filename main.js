@@ -1,4 +1,5 @@
 import './assets/scss/all.scss';
+import validate from 'validate.js';
 
 // 共用 DOM
 let ticketCard = document.querySelector('.ticketCard');
@@ -118,6 +119,7 @@ regionSearch.addEventListener('change',function(e){
 });
 
 // 5. 新增旅遊套票 + 監聽
+const addTicketForm = document.querySelector('.addTicketForm');
 const addTicket = document.querySelector('.addTicket');
 const ticketName = document.querySelector('#ticketName');
 const imgUrl = document.querySelector('#imgUrl');
@@ -138,23 +140,108 @@ addTicket.addEventListener('click',function(e){
     obj["group"] = Number(ticketNum.value.trim());
     obj["price"] = Number(ticketPrice.value.trim());
     obj["rate"] = Number(ticketRate.value.trim());
-    // if 判斷：form-group input 是否都有填寫？（物件帶入陣列方法）
+    // if 判斷：是否每個欄位都有填寫？
     // includes() 判斷陣列是否包含特定的元素，回傳 true 或 false
     if (Object.values(obj).includes('')){
       alert('每個欄位都為必填！')
     } else {
       data.push(obj);
-      const addTicketForm = document.querySelector('.addTicketForm');
       // 新增套票後，將地區搜尋的下拉選單的值設為 "全部地區"，以即時顯示所有地區的套票
       regionSearch.value = "全部地區";
       renderData("全部地區");
       addTicketForm.reset();
-    }
+    };
     renderData();
     renderC3();
 });
 
-/* if 判斷： form-group input 是否確實填寫？ --- */
+// 6. 使用 validate.js 進行表單驗證
+const constraints = {
+  ticketName: {
+    presence: {
+      message: "^必填！"
+    }
+  },
+  imgUrl: {
+    url: {
+      message: "^請填入正確網址"
+    },
+    presence: {
+      message: "^必填！"
+    }
+  },
+  sightSpot: {
+    presence: { message: '^必填！' }
+  },
+  ticketPrice: {
+    numericality: {
+      onlyInteger: true,
+      greaterThan: 0,
+      message: "^金額需為正整數"
+    },
+    presence: {
+      message:"^必填！"
+    }
+  },
+  ticketNum: {
+    numericality: {
+      onlyInteger: true,
+      greaterThan: 0,
+      message: "^組數需為正整數"
+    },
+    presence: {
+      message:"^必填！"
+    }
+  },
+  ticketRate: {
+    numericality: {
+      onlyInteger: true,
+      greaterThanOrEqualTo: 1,
+      lessThanOrEqualTo: 10,
+      message: "^請輸入1-10星級整數"
+    },
+    presence: {
+      message:"^必填！"
+    }
+  },
+  ticketDescription: {
+    length: {
+      maximum: 100,
+      message: "^目前可填寫字數${100 - ticketDescription.value.trim().length}個字"
+    },
+    presence: {
+      message: "^必填！"
+    }
+  }
+};
+const inputs = document.querySelectorAll('input[type="text"],select[name="sightSpot"],input[type="number"],textarea');
+inputs.forEach(item => {
+  item.addEventListener('change', function() {
+    // 1. 清空錯誤提示
+    console.log(item);
+    const errorsMessage = document.querySelector(`.${item.name}`);
+    errorsMessage.innerHTML = ``;
+
+    // 2. 驗證回傳的 errors
+    let errors = validate(addTicketForm, constraints);
+
+    console.log(errors);
+
+    // 3. 利用 errors key 作為 ('.${key}') 顯示 errors value
+    // console.log(errors); -> {ticketName: ["必填！"], imgUrl: ["請填入正確網址"],...}
+    if (errors) {
+      Object.keys(errors).forEach(keys => {
+        document.querySelector(`.${keys}`).innerHTML = `
+        <p class="d-flex align-items-center text-danger mb-4">
+          <span class="material-symbols-outlined me-1">error</span>${errors[keys]}
+        </p>`;
+      });
+    };
+  });
+});
+
+/* 第一次寫驗證：手刻
+// if 判斷： form-group input 是否確實填寫？
 // 否，顯示 <div> alert-message
 // 1. 套票名稱是否空白？
 ticketName.addEventListener('blur',function(){
@@ -241,7 +328,7 @@ ticketRate.addEventListener('blur',function(){
     ticketRateMessage.classList.add('d-none');
   } else if (ticketRate.value === ''){
     ticketRateMessage.classList.remove('d-none');
-    ticketRateMessage.innerHTML = `<span class="material-symbols-outlined me-1">error</span><span>必填！</span>`
+    ticketRateMessage.innerHTML = `<span class="material-symbols-outlined me-1">error</span><span>請輸入1-10星級整數！</span>`
   } else {
     ticketRateMessage.classList.remove('d-none');
     ticketRateMessage.innerHTML = `<span class="material-symbols-outlined me-1">error</span><span>請輸入1-10星級整數！</span>`
@@ -263,12 +350,5 @@ ticketDescription.addEventListener('keyup',function(){
     ticketDescriptionMessage.classList.remove('d-none');
     ticketDescriptionMessage.innerHTML = `<span class="material-symbols-outlined me-1">error</span><span>目前可填寫字數${100 - ticketDescription.value.trim().length}個字</span>`
   }
-})
-
-
-
-
-
-
-
-
+});
+*/
